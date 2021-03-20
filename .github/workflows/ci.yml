@@ -14,6 +14,6 @@ jobs:
         with:
           deno-version: v1.x
       - name: Setup Velociraptor
-        uses: lowlighter/setup-velociraptor@master
+        uses: jurassiscripts/setup-velociraptor@master
       - name: Check Velociraptor version
         run: vr --version
