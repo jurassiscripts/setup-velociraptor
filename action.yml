@@ -1,0 +1,12 @@
+name: Setup Velociraptor
+description: Install Velociraptor scripts manager
+inputs:
+  velociraptor-version:
+    description: Version to use.
+    default: 1.0.0-beta.17
+    required: false
+runs:
+  using: composite
+  steps:
+    - run: deno install --allow-all --name vr https://deno.land/x/velociraptor@${{ inputs.velociraptor-version }}/cli.ts
+      shell: bash
