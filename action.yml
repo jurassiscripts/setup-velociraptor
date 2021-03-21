@@ -3,7 +3,7 @@ description: Install Velociraptor scripts manager
 inputs:
   velociraptor-version:
     description: Version to use.
-    default: 1.0.0-beta.17
+    default: 1.0.0-beta.18
     required: false
 runs:
   using: composite
