@@ -22,4 +22,5 @@ runs:
           *) VERSION=@${{ inputs.velociraptor-version }} ;;
         esac
         deno install --allow-all --name ${{ inputs.velociraptor-alias }} https://deno.land/x/velociraptor$VERSION/cli.ts
+        export PATH="/home/runner/.deno/bin:$PATH"
       shell: bash
