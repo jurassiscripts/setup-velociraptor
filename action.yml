@@ -1,5 +1,9 @@
 name: Setup Velociraptor
 description: Install Velociraptor scripts manager
+author: JurassiScripts
+branding:
+  icon: terminal
+  color: blue
 inputs:
   velociraptor-version:
     description: Version to use
