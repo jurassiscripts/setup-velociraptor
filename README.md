@@ -1,10 +1,10 @@
-# setup-velociraptor
+# Setup velociraptor
 
 [![CI](https://github.com/jurassiscripts/setup-velociraptor/actions/workflows/ci.yml/badge.svg)](https://github.com/jurassiscripts/setup-velociraptor/actions/workflows/ci.yml)
 
 This action sets up [Velociraptor](https://github.com/jurassiscripts/velociraptor) environment for use in actions.
 
-# Usage
+## Usage
 
 See [action.yml](action.yml)
 
@@ -18,7 +18,12 @@ steps:
       vr --version
 ```
 
-# License
+| Input                  | Description    | Default value |
+| ---------------------- | -------------- | ------------- |
+| `velociraptor-version` | Version to use | `latest`      |
+| `velociraptor-alias`   | Alias name     | `vr`          |
+
+## License
 
 The scripts and documentation in this project are released under the
 [MIT License](LICENSE)
