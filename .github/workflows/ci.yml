@@ -4,7 +4,8 @@ on:
     branches:
       - master
 jobs:
-  test:
+  test-default:
+    name: Test default
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -17,6 +18,7 @@ jobs:
         run: vr --version
 
   test-version:
+    name: Test velociraptor-version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -31,6 +33,7 @@ jobs:
         run: test "$(vr --version)" = "1.0.0"
 
   test-alias:
+    name: Test velociraptor-alias
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
