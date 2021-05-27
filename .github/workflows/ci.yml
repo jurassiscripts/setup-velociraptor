@@ -11,9 +11,35 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Deno
         uses: denolib/setup-deno@v2
-        with:
-          deno-version: v1.x
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@master
       - name: Check Velociraptor version
         run: vr --version
+
+  test-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Deno
+        uses: denolib/setup-deno@v2
+      - name: Setup Velociraptor
+        uses: jurassiscripts/setup-velociraptor@master
+        with:
+          velociraptor-version: 1.0.0
+      - name: Check Velociraptor version
+        run: test "$(vr --version)" = "1.0.0"
+
+  test-alias:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Deno
+        uses: denolib/setup-deno@v2
+      - name: Setup Velociraptor
+        uses: jurassiscripts/setup-velociraptor@master
+        with:
+          velociraptor-alias: velociraptor
+      - name: Check Velociraptor version
+        run: velociraptor --version
