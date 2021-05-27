@@ -2,19 +2,20 @@ name: Setup Velociraptor
 description: Install Velociraptor scripts manager
 inputs:
   velociraptor-version:
-    description: Version to use.
+    description: Version to use
     default: latest
+    required: false
+  velociraptor-alias:
+    description: Alias name
+    default: vr
     required: false
 runs:
   using: composite
   steps:
     - run: |
-        VERSION=${{ inputs.velociraptor-version }}
-        if [[ $VERSION == "latest" ]]; then
-          # Fetch latest version from deno.land by extracting version number from redirection
-          VERSION=$(curl --location --silent --output /dev/null --write-out %{url_effective} https://deno.land/x/velociraptor | grep --only-matching --perl-regexp '(?<=@).*(?=/)')
-          echo "Velociraptor latest version is $VERSION"
-        fi
-        echo ""
-        deno install --allow-all --name vr https://deno.land/x/velociraptor@$VERSION/cli.ts
+        case "${{ inputs.velociraptor-version }}" in
+          "latest") ;; "") ;;
+          *) VERSION=@${{ inputs.velociraptor-version }} ;;
+        esac
+        deno install --allow-all --name ${{ inputs.velociraptor-alias }} https://deno.land/x/velociraptor$VERSION/cli.ts
       shell: bash
