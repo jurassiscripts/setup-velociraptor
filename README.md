@@ -13,7 +13,7 @@ Basic:
 ```yaml
 steps:
   - uses: denoland/setup-deno@v1
-  - uses: jurassiscripts/setup-velociraptor@master
+  - uses: jurassiscripts/setup-velociraptor@v1
   - run: |
       vr --version
 ```
