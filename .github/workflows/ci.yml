@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   test-default:
     name: Test default
@@ -13,7 +13,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
-        uses: jurassiscripts/setup-velociraptor@master
+        uses: jurassiscripts/setup-velociraptor@main
       - name: Check Velociraptor version
         run: vr --version
 
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
-        uses: jurassiscripts/setup-velociraptor@master
+        uses: jurassiscripts/setup-velociraptor@main
         with:
           velociraptor-version: 1.0.0
       - name: Check Velociraptor version
@@ -41,7 +41,7 @@ jobs:
       - name: Setup Deno
         uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
-        uses: jurassiscripts/setup-velociraptor@master
+        uses: jurassiscripts/setup-velociraptor@main
         with:
           velociraptor-alias: velociraptor
       - name: Check Velociraptor version
