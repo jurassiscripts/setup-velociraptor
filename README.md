@@ -12,7 +12,7 @@ Basic:
 
 ```yaml
 steps:
-  - uses: denolib/setup-deno@v2
+  - uses: denoland/setup-deno@v1
   - uses: jurassiscripts/setup-velociraptor@master
   - run: |
       vr --version

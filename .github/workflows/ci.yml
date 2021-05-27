@@ -10,7 +10,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Setup Deno
-        uses: denolib/setup-deno@v2
+        uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@master
       - name: Check Velociraptor version
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Setup Deno
-        uses: denolib/setup-deno@v2
+        uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@master
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Setup Deno
-        uses: denolib/setup-deno@v2
+        uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@master
         with:
