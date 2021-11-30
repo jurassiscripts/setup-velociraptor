@@ -75,7 +75,8 @@ runs:
       id: deno-version
       shell: bash
       run: |
-        DENO_VERSION=$(deno --version | grep -Po '(?<=deno )\d+\.\d+\.\d+')
+        set +e
+        DENO_VERSION=$(deno --version | grep -Po '(?<=deno )[0-9]+[.][0-9]+[.][0-9]+')
         echo "::set-output name=value::$DENO_VERSION"
     - name: compute output velociraptor-version
       id: velociraptor-version
