@@ -31,13 +31,16 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v2
+    - name: run actions/checkout@v2
+      uses: actions/checkout@v2
       if: ${{ inputs.checkout }}
-    - uses: denoland/setup-deno@v1
+    - name: run denoland/setup-deno@v1
+      uses: denoland/setup-deno@v1
       if: ${{ inputs.deno-version }}
       with: 
         deno-version: ${{ inputs.deno-version }}
-    - shell: bash
+    - name: setup velociraptor
+      shell: bash
       run: |
         case "${{ inputs.velociraptor-version }}" in
           "latest") ;; "") ;;
@@ -45,15 +48,18 @@ runs:
         esac
         deno install --allow-all --name ${{ inputs.velociraptor-alias }} https://deno.land/x/velociraptor$VERSION/cli.ts
         echo "/home/runner/.deno/bin" >> $GITHUB_PATH
-    - shell: bash
+    - name: add velociraptor to path (macos)
+      shell: bash
       if: ${{ contains(runner.os, 'macos') }}
       run: |
         echo "/Users/runner/.deno/bin" >> $GITHUB_PATH
-    - shell: powershell
+    - name: add velociraptor to path (windows)
+      shell: powershell
       if: ${{ contains(runner.os, 'windows') }}
       run: |
         echo "C:\Users\runneradmin\.deno\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-    - shell: bash
+    - name: compute outputs
+      shell: bash
       run: |
         DENO_CANARY=false 
         DENO_RELEASE_TYPE=$(deno --version | grep -Po '(?<=\()(?:canary|release)(?=,)')
@@ -64,6 +70,9 @@ runs:
           DENO_CANARY=true
         fi
 
+        echo "DENO_CANARY: $DENO_CANARY"
+        echo "DENO_VERSION: $DENO_VERSION"
+        echo "VELOCIRAPTOR_VERSION: $VELOCIRAPTOR_VERSION"
         echo "::set-output name=deno-version::$DENO_VERSION"
         echo "::set-output name=deno-is-canary::$DENO_CANARY"
         echo "::set-output name=velociraptor-version::$VELOCIRAPTOR_VERSION"
