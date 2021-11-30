@@ -24,10 +24,13 @@ inputs:
 outputs:
   deno-is-canary:
     description: Whether installed Deno version is a canary version
+    value: ${{ steps.deno-is-canary.outputs.value }}
   deno-version:
     description: Deno version that was installed
+    value: ${{ steps.deno-version.outputs.value }}
   velociraptor-version:
     description: Velociraptor version that was installed
+    value: ${{ steps.velociraptor-version.outputs.value }}
 runs:
   using: composite
   steps:
@@ -67,16 +70,16 @@ runs:
         then
           DENO_CANARY=true
         fi
-        echo "::set-output name=deno-is-canary::$DENO_CANARY"
+        echo "::set-output name=value::$DENO_CANARY"
     - name: compute output deno-version
       id: deno-version
       shell: bash
       run: |
         DENO_VERSION=$(deno --version | grep -Po '(?<=deno )\d+\.\d+\.\d+')
-        echo "::set-output name=deno-version::$DENO_VERSION"
+        echo "::set-output name=value::$DENO_VERSION"
     - name: compute output velociraptor-version
       id: velociraptor-version
       shell: bash
       run: |
         VELOCIRAPTOR_VERSION=$(${{ inputs.velociraptor-alias }} --version)
-        echo "::set-output name=velociraptor-version::$VELOCIRAPTOR_VERSION"
+        echo "::set-output name=value::$VELOCIRAPTOR_VERSION"
