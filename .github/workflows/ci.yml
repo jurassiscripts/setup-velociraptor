@@ -58,7 +58,7 @@ jobs:
     name: Test velociraptor@v2
     runs-on: ubuntu-latest
     steps:
-        uses: jurassiscripts/setup-velociraptor@v2
+      - uses: jurassiscripts/setup-velociraptor@v2
       - name: Check Velociraptor version
         run: vr --version
 
