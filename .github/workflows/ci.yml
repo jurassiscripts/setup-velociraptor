@@ -3,12 +3,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - master
-    paths-ignore:
-      - README.md
-      - LICENSE
 jobs:
   test-default:
     name: Test default
@@ -20,38 +14,39 @@ jobs:
           - windows-latest
           - macos-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@main
       - name: Check Velociraptor version
         run: vr --version
 
+  test-deno-version:
+    name: Test deno-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Velociraptor
+        id: action
+        uses: jurassiscripts/setup-velociraptor@main
+        with:
+          deno-version: 1.16.3
+      - name: Check Deno version
+        run: test "${{ steps.action.outputs.deno-version }}" = "1.16.3"
+
   test-version:
     name: Test velociraptor-version
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
+        id: action
         uses: jurassiscripts/setup-velociraptor@main
         with:
           velociraptor-version: 1.3.0
       - name: Check Velociraptor version
-        run: test "$(vr --version)" = "1.3.0"
+        run: test "${{ steps.action.outputs.velociraptor-version }}" = "1.3.0"
 
   test-alias:
     name: Test velociraptor-alias
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@main
         with:
