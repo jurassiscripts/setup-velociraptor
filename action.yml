@@ -16,11 +16,19 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: |
+    - shell: bash
+      run: |
         case "${{ inputs.velociraptor-version }}" in
           "latest") ;; "") ;;
           *) VERSION=@${{ inputs.velociraptor-version }} ;;
         esac
         deno install --allow-all --name ${{ inputs.velociraptor-alias }} https://deno.land/x/velociraptor$VERSION/cli.ts
         echo "/home/runner/.deno/bin" >> $GITHUB_PATH
-      shell: bash
+    - shell: bash
+      if: ${{ contains(runner.os, 'macos') }}
+      run: |
+        echo "/Users/runner/.deno/bin" >> $GITHUB_PATH
+    - shell: powershell
+      if: ${{ contains(runner.os, 'windows') }}
+      run: |
+        echo "C:\Users\runneradmin\.deno\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
