@@ -34,9 +34,9 @@ jobs:
       - name: Setup Velociraptor
         uses: jurassiscripts/setup-velociraptor@main
         with:
-          velociraptor-version: 1.0.0
+          velociraptor-version: 1.3.0
       - name: Check Velociraptor version
-        run: test "$(vr --version)" = "1.0.0"
+        run: test "$(vr --version)" = "1.3.0"
 
   test-alias:
     name: Test velociraptor-alias
