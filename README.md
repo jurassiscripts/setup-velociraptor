@@ -4,7 +4,7 @@
 
 This action sets up [Velociraptor](https://github.com/jurassiscripts/velociraptor) environment for use in actions.
 
-For convenience, `setup-velociraptor@v2` can also run automatically [`actions/checkout@v2`](https://github.com/marketplace/actions/checkout) and [`denoland/setup-deno`](https://github.com/marketplace/actions/setup-deno).
+For convenience, `setup-velociraptor@v2` can also run automatically [`actions/checkout@v2`](https://github.com/marketplace/actions/checkout) and [`denoland/setup-deno@1`](https://github.com/marketplace/actions/setup-deno).
 
 ## Usage
 
