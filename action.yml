@@ -5,18 +5,45 @@ branding:
   icon: terminal
   color: blue
 inputs:
+  checkout:
+    description: Whether to checkout repository first
+    default: true
+    required: false
+  deno-version:
+    description: Deno version to use
+    default: 1.x
+    required: false
   velociraptor-version:
-    description: Version to use
+    description: Velociraptor version to use
     default: latest
     required: false
   velociraptor-alias:
-    description: Alias name
+    description: Velociraptor alias name
     default: vr
     required: false
+outputs:
+  deno-is-canary:
+    description: Whether installed Deno version is a canary version
+    value: ${{ steps.deno-is-canary.outputs.value }}
+  deno-version:
+    description: Deno version that was installed
+    value: ${{ steps.deno-version.outputs.value }}
+  velociraptor-version:
+    description: Velociraptor version that was installed
+    value: ${{ steps.velociraptor-version.outputs.value }}
 runs:
   using: composite
   steps:
-    - shell: bash
+    - name: run actions/checkout@v2
+      uses: actions/checkout@v2
+      if: ${{ inputs.checkout }}
+    - name: run denoland/setup-deno@v1
+      uses: denoland/setup-deno@v1
+      if: ${{ inputs.deno-version }}
+      with: 
+        deno-version: ${{ inputs.deno-version }}
+    - name: setup velociraptor
+      shell: bash
       run: |
         case "${{ inputs.velociraptor-version }}" in
           "latest") ;; "") ;;
@@ -24,11 +51,35 @@ runs:
         esac
         deno install --allow-all --name ${{ inputs.velociraptor-alias }} https://deno.land/x/velociraptor$VERSION/cli.ts
         echo "/home/runner/.deno/bin" >> $GITHUB_PATH
-    - shell: bash
+    - name: add velociraptor to path (macos)
+      shell: bash
       if: ${{ contains(runner.os, 'macos') }}
       run: |
         echo "/Users/runner/.deno/bin" >> $GITHUB_PATH
-    - shell: powershell
+    - name: add velociraptor to path (windows)
+      shell: powershell
       if: ${{ contains(runner.os, 'windows') }}
       run: |
         echo "C:\Users\runneradmin\.deno\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+    - name: compute output deno-is-canary
+      id: deno-is-canary
+      shell: bash
+      run: |
+        DENO_CANARY=false 
+        if [ "$DENO_RELEASE_TYPE" = "canary" ]
+        then
+          DENO_CANARY=true
+        fi
+        echo "::set-output name=value::$DENO_CANARY"
+    - name: compute output deno-version
+      id: deno-version
+      shell: bash
+      run: |
+        DENO_VERSION=$(deno --version | grep -Po '(?<=deno )\d+\.\d+\.\d+')
+        echo "::set-output name=value::$DENO_VERSION"
+    - name: compute output velociraptor-version
+      id: velociraptor-version
+      shell: bash
+      run: |
+        VELOCIRAPTOR_VERSION=$(${{ inputs.velociraptor-alias }} --version)
+        echo "::set-output name=value::$VELOCIRAPTOR_VERSION"
